@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">   
+    <style>
+      img { 
+          user-select: none; /* Запретить выделение */
+          pointer-events: none; /* Запретить перетаскивание */
+      }
+  </style>
+</head>
+
+<body>
+    <div class="image-container">
+        <img class="my-image" src="./img/xae.jpg" alt="Image">
+        <div class="gl">Trendy Cover</div>
+        <div class="e1">Импортные новинки на рынке</div>
+        <div class="e2">Высшее качество</div>
+    </div>
+
+    <div class="product-grid">
+        <!-- Товар 1 -->
+        <div class="product-item" onclick="openModal(1)">
+            <img src="./img/tova1.jpg" alt="Товар 1" class="product-image">
+            <h3 class="product-name">CloudRush 5X</h3>
+            <p class="product-price">90$</p>
+        </div>
+
+        <!-- Товар 2 -->
+        <div class="product-item" onclick="openModal(2)">
+            <img src="./img/tovar2.jpg" alt="Товар 2" class="product-image">
+            <h3 class="product-name">FlavorBlast Max</h3>
+            <p class="product-price">60$</p>
+        </div>
+
+        <!-- Товар 3 -->
+        <div class="product-item" onclick="openModal(3)">
+            <img src="./img/tovar3.jpg" alt="Товар 3" class="product-image">
+            <h3 class="product-name">VaporVibe Pro</h3>
+            <p class="product-price">44$</p>
+        </div>
+
+        <!-- Товар 4 -->
+        <div class="product-item" onclick="openModal(4)">
+            <img src="./img/tovar4.jpg" alt="Товар 4" class="product-image">
+            <h3 class="product-name">MistMaster 5.0</h3>
+            <p class="product-price">131$</p>
+        </div>
+
+        <!-- Товар 5 -->
+        <div class="product-item" onclick="openModal(5)">
+            <img src="./img/tovar 6.jpg" alt="Товар 5" class="product-image">
+            <h3 class="product-name">AirPulse Nova</h3>
+            <p class="product-price">89$</p>
+        </div>
+
+        <!-- Товар 6 -->
+        <div class="product-item" onclick="openModal(6)">
+            <img src="./img/tovar5.jpg" alt="Товар 6" class="product-image">
+            <h3 class="product-name">SmoothDrip Essence</h3>
+            <p class="product-price">105$</p>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Product Image">
+            <h3 id="modalName">Product Name</h3>
+            <p id="modalPrice">Product Price</p>
+            <p id="modalDescription">Product Description</p>
+           <!-- Кнопка оформления заказа -->
+           <button class="order-button" onclick="redirectToTelegram()">Оформить заказ</button>
+
+        </div>
+    </div>
+
+    <script>
+        // Данные о товарах
+        const products = [
+            {
+                id: 1,
+                name: "CloudRush 5X",
+                price: "90$",
+                image: "./img/tova1.jpg",
+                description: "Откройте для себя яркий мир насыщенных ароматов с CloudRush 5X! Этот компактный и стильный HQD гарантирует до 1500 затяжек, мягкую тягу и идеальное сочетание вкусов. Ваш идеальный компаньон для отдыха и наслаждения каждым моментом."
+
+
+            },
+            {
+                id: 2,
+                name: "FlavorBlast Max",
+                price: "60$",
+                image: "./img/tovar2.jpg",
+                description: "Насладитесь взрывом вкуса с FlavorBlast Max! Объединяя мощность и компактность, этот HQD предлагает до 2000 насыщенных затяжек. Идеально подходит для тех, кто ценит яркие вкусы и высокое качество."
+            },
+            {
+                id: 3,
+                name: "VaporVibe Pro",
+                price: "44$",
+                image: "./img/tovar3.jpg",
+                description: "Погрузитесь в гармонию пара и вкуса с VaporVibe Pro! Стильный дизайн, удобство в использовании и до 1800 затяжек с уникальными ароматами делают его идеальным выбором для активных и энергичных людей."
+            },
+            {
+                id: 4,
+                name: "MistMaster 5.0",
+                price: "131$",
+                image: "./img/tovar4.jpg",
+                description: "Превратите каждый день в удовольствие с MistMaster 5.0! Этот HQD создан для тех, кто ценит глубину вкуса и долговечность. До 2000 затяжек и богатая палитра ароматов ждут вас!"
+            },
+            {
+                id: 5,
+                name: "AirPulse Nova",
+                price: "89$",
+                image: "./img/tovar 6.jpg",
+                description: "Ваш новый уровень вейпинга — AirPulse Nova! Этот HQD удивляет мощностью, мягким паром и до 2200 затяжек. Идеально сбалансированный вкус и элегантный дизайн для настоящих ценителей."
+            },
+            {
+                id: 6,
+                name: "SmoothDrip Essence",
+                price: "105$",
+                image: "./img/tovar5.jpg",
+                description: "Ощутите всю глубину вкуса с SmoothDrip Essence! Эта премиальная жидкость создана для тех, кто ценит яркость, насыщенность и мягкость в каждом вдохе. Совместима с любыми HQD, идеально подходит для вашего стиля!"
+            }
+        ];
+
+        // Открытие модального окна
+
+// Открытие модального окна
+function openModal(productId) {
+    const product = products.find((p) => p.id === productId);
+    if (product) {
+        document.getElementById("modalImage").src = product.image;
+        document.getElementById("modalName").textContent = product.name;
+        document.getElementById("modalPrice").textContent = product.price;
+        document.getElementById("modalDescription").textContent = product.description;
+
+        const modal = document.getElementById("productModal");
+        modal.style.display = "flex";
+
+        // Добавляем обработчик клика по всему экрану для закрытия модального окна
+        modal.addEventListener('click', function (event) {
+            // Закрыть только при клике на фон, а не на содержимое
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    }
+}
+
+// Функция для перенаправления на Telegram в новой вкладке
+function redirectToTelegram() {
+    // Открытие Telegram по ссылке в новой вкладке
+    window.open("https://t.me/SkveZy", "_blank"); // Замените на ваш Telegram-аккаунт или бота
+}
+
+// Закрытие модального окна
+function closeModal() {
+    const modal = document.getElementById("productModal");
+    modal.style.display = "none";
+}
+
+    </script>
+<div class="content">
+    <!-- Текст по центру -->
+    <h1>Вопрос-ответ</h1>
+    
+    <!-- Схема с тремя категориями -->
+    <div class="categories">
+      <div class="category-item" id="quality">
+        <h2>Качество</h2>
+        <p>Мы гарантируем высокое качество наших товаров и услуг, подтвержденное сертификатами и отзывами клиентов.</p>
+      </div>
+      <div class="category-item" id="payment">
+        <h2>Оплата</h2>
+        <p>У нас удобные способы оплаты, включая кредитные карты, электронные кошельки и КриптоВалюты.</p>
+      </div>
+      <div class="category-item" id="delivery">
+        <h2>Доставка</h2>
+        <p>Быстрая и надежная доставка в любую точку страны. Доставка осуществляется через Новую почту.</p>
+      </div>
+    </div>
+
+ 
+
+   
+  <script>
+    // Функция для переключения видимости информации
+    function toggleInfo(categoryId) {
+      const category = document.getElementById(categoryId);
+      const paragraph = category.querySelector('p');
+      // Переключение видимости параграфа
+      if (paragraph.style.display === "none" || paragraph.style.display === "") {
+        // Скрыть все параграфы, прежде чем показывать текущий
+        document.querySelectorAll('.category-item p').forEach(p => {
+          p.style.display = "none";
+        });
+        paragraph.style.display = "block";
+      } else {
+        paragraph.style.display = "none";
+      }
+    }
+
+    // Добавление событий для кнопок
+    document.getElementById('quality').addEventListener('click', function() {
+      toggleInfo('quality');
+    });
+
+    document.getElementById('payment').addEventListener('click', function() {
+      toggleInfo('payment');
+    });
+
+    document.getElementById('delivery').addEventListener('click', function() {
+      toggleInfo('delivery');
+    });
+  </script>
+    <div class="content">
+        <!-- Текст по центру -->
+        <h1>Контакты и Отзывы</h1>
+        
+        <!-- Кнопки для контактов и отзывов -->
+        <div class="buttons">
+            <a href="https://t.me/SkveZy" class="button" target="_blank">Контакты</a>
+            <a href="https://t.me/SkveZy" class="button" target="_blank">Отзывы</a> <!-- Кнопка для отзывов -->
+          </div>
+         
+
+
+
+          <div class="footer-background">
+            <img class="footer-image" src="./img/q.jpg" alt="footer image">
+            <p>© All Rights Reserved. VAPE-SHOP Inc.</p>
+        </div>
+        <script>document.querySelectorAll('img').forEach(img => {
+          img.addEventListener('copy', (e) => {
+              e.preventDefault();
+              const url = img.src; // Ссылка на изображение
+              e.clipboardData.setData('text/plain', url); // Сохраняем в буфер ссылку
+          });
+      });</script>
+      
+
+
+
+
+    
+</body>
+
+</html>
