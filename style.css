@@ -1,0 +1,643 @@
+.my-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.image-container {
+    position: relative; /* Контейнер для изображения и текста */
+    width: 100%; 
+    height: auto;
+}
+
+.gl {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    font-size: 6vw; /* Размер шрифта зависит от ширины экрана */
+    color: rgb(235, 232, 232);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap; /* Отключает перенос текста */
+}
+
+.e1, .e2 {
+    position: absolute;
+    font-size: 3vw;
+    color: rgb(235, 232, 232);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.e1 {
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.e2 {
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Адаптация для маленьких экранов */
+@media (max-width: 768px) {
+    .gl {
+        font-size: 6vw; /* Уменьшение размера текста */
+    }
+    .e1, .e2 {
+        font-size: 4.5vw; /* Уменьшение текста */
+    }
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    gap: 20px; /* Расстояние между товарами */
+    padding: 20px; /* Отступы вокруг сетки */
+}
+
+.product-item {
+    text-align: center; /* Центрируем текст */
+    border: 1px solid #ddd; /* Рамка вокруг товара */
+    border-radius: 8px; /* Закругление углов */
+    padding: 15px; /* Внутренние отступы */
+    background-color: #f9f9f9; /* Цвет фона */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+    transition: transform 0.3s, box-shadow 0.3s; /* Анимация при наведении */
+}
+
+.product-item:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+    width: 100%; /* Ширина изображения */
+    height: auto; /* Сохраняем пропорции */
+    border-radius: 8px; /* Закругление углов у изображения */
+}
+
+.product-name {
+    font-size: 18px; /* Размер текста для названия */
+    margin: 10px 0 5px;
+}
+
+.product-price {
+    font-size: 20px; /* Размер текста для цены */
+    color: #000000;
+}
+
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки на маленьких экранах */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr; /* 1 колонка на очень маленьких экранах */
+    }
+}
+
+
+
+/* Стили для модального окна */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Фон занимает всю ширину */
+    height: 100%; /* Фон занимает всю высоту */
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Чтобы исключить прокрутку */
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 70%; /* Ширина окна для обычных экранов */
+    max-width: 500px; /* Устанавливаем максимальную ширину */
+    height: auto; /* Даем окну гибкость по высоте */
+    text-align: center;
+    position: relative;
+    pointer-events: auto; /* Убедимся, что клики внутри модального окна работают */
+    margin: 0 auto; /* Центрируем на экране */
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 80%; /* Уменьшаем ширину окна на мобильных устройствах */
+        padding: 15px; /* Добавим немного больше отступов для легкости */
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 75%; /* Еще больше сужаем окно на очень маленьких экранах */
+        padding: 10px; /* Еще более комфортные отступы */
+        max-width: 400px; /* Устанавливаем максимальную ширину для маленьких экранов */
+    }
+}
+
+@media (max-width: 375px) { /* Для экранов типа iPhone SE */
+    .modal-content {
+        width: 75%; /* Немного сужаем окно для маленьких экранов */
+        max-width: 350px; /* Максимальная ширина для маленьких экранов */
+        padding: 10px;
+    }
+}
+
+
+/* Кнопка закрытия */
+.modal-content .close {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    font-size: 100px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000000; /* Цвет крестика */
+}
+
+/* Стили для изображения внутри модального окна */
+.modal-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+
+
+#modalName {
+    font-family: 'Arial', sans-serif; /* Укажите желаемый шрифт */
+    font-size: 24px; /* Размер текста */
+    font-weight: bold; /* Жирное начертание */
+    color: #000000; /* Цвет текста */
+}
+
+
+#modalPrice {
+    font-family: 'Arial', sans-serif; /* Укажите желаемый шрифт */
+    font-size: 24px; /* Размер текста */
+    font-weight: bold; /* Жирное начертание */
+    color: #000000; /* Цвет текста */
+}
+
+
+#modalDescription {   
+    font-family: 'Arial', sans-serif; /* Укажите желаемый шрифт */
+    font-size: 20px; /* Размер текста */
+    font-weight: bold; /* Жирное начертание */
+    color: #000000; /* Цвет текста */
+}
+
+
+/* Общие стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* Содержимое модального окна */
+.modal-content {
+    background: #fff;
+    padding: 10px; /* Уменьшаем отступы */
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px; /* Ограничиваем максимальную ширину */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Стили для изображения товара */
+.modal-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 5px; /* Уменьшаем отступ между изображением и текстом */
+}
+
+/* Стили для названия товара */
+#modalName {
+    font-size: 26px; /* Увеличиваем шрифт для названия */
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 3px; /* Уменьшаем отступ между названием и ценой */
+}
+
+/* Стили для цены товара */
+#modalPrice {
+    font-size: 22px; /* Увеличиваем шрифт для цены */
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 5px; /* Уменьшаем отступ между ценой и описанием */
+}
+
+/* Стили для описания товара */
+#modalDescription {
+    font-size: 18px; /* Увеличиваем шрифт описания */
+    color: #000000;
+    margin-bottom: 10px; /* Уменьшаем отступ между описанием и кнопкой */
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* Кнопка "Оформить заказ" */
+.order-button {
+    padding: 12px 30px; /* Увеличиваем отступы кнопки */
+    font-size: 18px; /* Увеличиваем шрифт */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* При наведении на кнопку */
+.order-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* При нажатии на кнопку */
+.order-button:active {
+    transform: scale(0.98);
+}
+
+
+/* Адаптация для экранов с шириной до 768px */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 8px;
+    }
+
+    #modalName {
+        font-size: 24px;
+    }
+
+    #modalPrice {
+        font-size: 20px;
+    }
+
+    #modalDescription {
+        font-size: 16px;
+    }
+
+    .order-button {
+        font-size: 16px; /* Увеличиваем шрифт на средних экранах */
+        padding: 14px 35px; /* Увеличиваем отступы */
+    }
+}
+
+/* Адаптация для экрана с шириной до 480px (например, iPhone SE) */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        padding: 8px;
+    }
+
+    #modalName {
+        font-size: 22px;
+    }
+
+    #modalPrice {
+        font-size: 18px;
+    }
+
+    #modalDescription {
+        font-size: 14px;
+    }
+
+    .order-button {
+        font-size: 14px; /* Увеличиваем шрифт на маленьких экранах */
+        padding: 16px 40px; /* Увеличиваем отступы */
+    }
+}
+
+/* Адаптация для широких экранов (например, для ноутбуков и десктопов) */
+@media (min-width: 1200px) {
+    .modal-content {
+        width: 60%;
+    }
+
+    #modalName {
+        font-size: 30px;
+    }
+
+    #modalPrice {
+        font-size: 24px;
+    }
+
+    #modalDescription {
+        font-size: 18px;
+    }
+
+    .order-button {
+        font-size: 20px; /* Увеличиваем шрифт кнопки */
+        padding: 18px 50px; /* Увеличиваем отступы на больших экранах */
+    }
+}
+
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 80%; /* Уменьшаем ширину окна на мобильных устройствах */
+        padding: 15px; /* Добавим немного больше отступов для легкости */
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 75%; /* Еще больше сужаем окно на очень маленьких экранах */
+        padding: 10px; /* Еще более комфортные отступы */
+        max-width: 400px; /* Устанавливаем максимальную ширину для маленьких экранов */
+    }
+}
+
+@media (max-width: 375px) { /* Для экранов типа iPhone SE */
+    .modal-content {
+        width: 75%; /* Немного сужаем окно для маленьких экранов */
+        max-width: 350px; /* Максимальная ширина для маленьких экранов */
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%; /* Убедитесь, что ширина равна 100% */
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Вертикальная раскладка */
+}
+
+.content {
+    flex-grow: 1; /* Контент растягивается на оставшееся пространство */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    width: 100%; /* Ширина на всю страницу */
+}
+
+.categories {
+    display: flex;
+    flex-direction: column-reverse; /* Размещаем элементы снизу вверх */
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+
+.category-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #f0f0f0;
+}
+
+.category-item h2 {
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+.category-item p {
+    font-size: 20px;
+    color: #000000;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Стили для раздела отзывов */
+.reviews {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.reviews h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.reviews p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.reviews textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.reviews button {
+    background-color: #0078e7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reviews button:hover {
+    background-color: #005bb5;
+}
+
+.reviews .review-list {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.reviews .review-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для кнопок */
+.button {
+    font-size: 20px;
+    color: #0078e7;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #0078e7;
+    border-radius: 30px;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button:hover {
+    background-color: #0078e7;
+    color: white;
+}
+
+.footer-background {
+    background-color: #e0e0e0;
+    width: 100vw; /* Растягиваем футер на всю ширину экрана */
+    min-height: 100%;
+    padding: 20px 0;
+    margin-top: 0;
+    box-sizing: border-box; /* Учитываем паддинги и бордеры в расчете ширины */
+    position: relative;
+    flex-shrink: 0;
+}
+
+.footer-background {
+    background-color: #5d5a5a; /* Серый фон футера */
+    display: flex; /* Используем Flexbox */
+    flex-direction: column; /* Располагаем элементы вертикально */
+    justify-content: center; /* Центрируем элементы по вертикали */
+    align-items: center; /* Центрируем элементы по горизонтали */
+    padding: 20px 0; /* Отступы сверху и снизу для футера */
+    text-align: center; /* Центрируем текст */
+    width: 99.1vw;
+
+    min-height: 100%;
+    box-sizing: border-box; /* Учитываем отступы и бордеры в расчете ширины */
+    margin-top: 30px;
+   
+}
+
+.footer-image {
+    max-width: 10%; /* Ограничиваем максимальную ширину изображения (можно настроить) */
+    height: auto; /* Сохраняем пропорции изображения */
+    margin-bottom: 20px; /* Отступ снизу между изображением и текстом */
+   
+
+}      
+
+.footer-background p {
+    font-size: 16px; /* Размер текста */
+    color: #222020; /* Цвет текста */
+}
+
+
+/* Медиазапрос для экранов шириной до 375px (например, iPhone SE) */
+@media screen and (max-width: 375px) {
+    .footer-image {
+        max-width: 30%; /* Увеличиваем изображение до 80% ширины контейнера для маленьких экранов */
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .footer-image {
+        max-width: 30%; /* Увеличиваем изображение до 80% ширины контейнера для маленьких экранов */
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .footer-image {
+        max-width: 30%; /* Увеличиваем изображение до 80% ширины контейнера для маленьких экранов */
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .footer-image {
+        max-width: 30%; /* Увеличиваем изображение до 80% ширины контейнера для маленьких экранов */
+    }
+}
+
+@media screen and (max-width: 1030px) {
+    .footer-image {
+        max-width: 30%; /* Увеличиваем изображение до 80% ширины контейнера для маленьких экранов */
+    }
+}
+
+
+
+@media screen and (max-width: 400px) {
+    .content {
+        font-size: 13px; /* Уменьшаем размер текста */ 
+        
+    }
+}
+
+
+
+
+@media screen and (max-width: 375px) {
+    .content {
+        font-size: 13px; /* Уменьшаем размер текста */ 
+        
+    }
+}
+
+
